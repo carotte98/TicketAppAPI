@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TicketApp.Data;
+using TicketApp.Services;
+using TicketApp.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,10 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+
+// Ajout des Services
+builder.Services.AddScoped<IAppService, AppService>();
 
 var app = builder.Build();
 

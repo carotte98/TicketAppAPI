@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TicketApp.Models.DTOs;
+using TicketApp.Services.Interfaces;
 
 namespace TicketApp.Controllers
 {
@@ -12,6 +13,16 @@ namespace TicketApp.Controllers
     [Route("api/[controller]")]
     public class AppController : ControllerBase
     {
+        private readonly IAppService _appService;
+        private readonly ILogger _logger;
+
+        public AppController(IAppService appService, ILogger logger)
+        {
+            _appService = appService;
+            _logger = logger;
+        }
+
+
         /// <summary>
         ///     Méthode GetAll
         ///     
@@ -19,34 +30,60 @@ namespace TicketApp.Controllers
         /// </summary>
         /// <returns>Un JSON avec les Apps</returns>
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return null;
+            _logger.LogInformation("Récupération des apps");
+
+            var result = await _appService.GetAllAsync();
+
+            return Ok(result);
         }
 
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return null;
+            _logger.LogInformation("Récupération de l'application à l'{id}", id);
+
+            var app = await _appService.GetByIdAsync(id);
+
+            if (app == null)
+                return NotFound();
+
+            return Ok(app);
         }
 
         [HttpPost]
-        public IActionResult Create(AppDto dto)
+        public async Task<IActionResult> Create(AppDto dto)
         {
-            return null;
+            if(await _appService.ExistsByName(dto.nameApp))
+                return Conflict($"Une app nommé '{dto.nameApp}' existe déjà");
+
+            var app = await _appService.CreateAsync(dto);
+
+            return CreatedAtAction("Création App", new { id = app.idApp }, app);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, AppDto dto) 
+        public async Task<IActionResult> Update(int id, AppDto dto) 
         {
-            return null;        
+            var app = await _appService.UpdateAsync(id, dto);
+
+            if (app == null)
+                return NotFound();
+
+            return Ok(app);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return null;
+            var success = await _appService.DeleteAsync(id);
+
+            if (!success)
+                return NotFound();
+
+            return NoContent();
         }
     }
 }
