@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TicketApp.Models.DTOs;
 
 namespace TicketApp.Controllers
 {
@@ -26,6 +27,24 @@ namespace TicketApp.Controllers
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
+        {
+            return null;
+        }
+
+        [HttpPost]
+        public IActionResult Create(AppDto dto)
+        {
+            return null;
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, AppDto dto) 
+        {
+            return null;        
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
             return null;
         }

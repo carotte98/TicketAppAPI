@@ -1,4 +1,25 @@
+using Microsoft.EntityFrameworkCore;
+using TicketApp.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Save DbContext on PostgreSql provider
+builder.Services.AddDbContext<ApplicationDbContext>( options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
+// While in development, enable detailled log of SQL queries
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"))
+    .EnableSensitiveDataLogging().EnableDetailedErrors()
+    .LogTo(Console.WriteLine,
+        LogLevel.Information)
+    );
+}
 
 // Add services to the container.
 
