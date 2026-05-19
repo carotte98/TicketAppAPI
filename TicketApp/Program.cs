@@ -2,8 +2,16 @@ using Microsoft.EntityFrameworkCore;
 using TicketApp.Data;
 using TicketApp.Services;
 using TicketApp.Services.Interfaces;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMvc();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "TicketApp", Version = "v1" });
+});
 
 // Save DbContext on PostgreSql provider
 builder.Services.AddDbContext<ApplicationDbContext>( options =>
@@ -21,13 +29,24 @@ if (builder.Environment.IsDevelopment())
     .LogTo(Console.WriteLine,
         LogLevel.Information)
     );
+
+
 }
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+// CORS (Cross-Origin Resource Sharing)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 
 // Ajout des Services
@@ -35,11 +54,12 @@ builder.Services.AddScoped<IAppService, AppService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+
+app.UseSwaggerUI(options =>
 {
-    app.MapOpenApi();
-}
+    options.SwaggerEndpoint("v1/swagger.json", "TicketAppV1");
+});
 
 app.UseHttpsRedirection();
 

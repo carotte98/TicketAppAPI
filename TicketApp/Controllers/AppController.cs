@@ -14,21 +14,14 @@ namespace TicketApp.Controllers
     public class AppController : ControllerBase
     {
         private readonly IAppService _appService;
-        private readonly ILogger _logger;
+        private readonly ILogger<AppDto> _logger;
 
-        public AppController(IAppService appService, ILogger logger)
+        public AppController(IAppService appService, ILogger<AppDto> logger)
         {
             _appService = appService;
             _logger = logger;
         }
 
-
-        /// <summary>
-        ///     Méthode GetAll
-        ///     
-        ///     Renvoie toutes les applications dans la table App
-        /// </summary>
-        /// <returns>Un JSON avec les Apps</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -54,18 +47,18 @@ namespace TicketApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(AppDto dto)
+        public async Task<IActionResult> Create([FromBody]AppDto dto)
         {
             if(await _appService.ExistsByName(dto.nameApp))
                 return Conflict($"Une app nommé '{dto.nameApp}' existe déjà");
 
             var app = await _appService.CreateAsync(dto);
 
-            return CreatedAtAction("Création App", new { id = app.idApp }, app);
+            return CreatedAtAction(nameof(GetById), new { id = app.idApp }, app);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, AppDto dto) 
+        public async Task<IActionResult> Update(int id, [FromBody] AppDto dto) 
         {
             var app = await _appService.UpdateAsync(id, dto);
 
