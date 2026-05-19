@@ -52,6 +52,7 @@ builder.Services.AddCors(options =>
 // Ajout des Services
 builder.Services.AddScoped<IAppService, AppService>();
 builder.Services.AddScoped<IStatusService, StatusService>();
+builder.Services.AddScoped<ITicketTypeService, TicketTypeService>();
 
 var app = builder.Build();
 
