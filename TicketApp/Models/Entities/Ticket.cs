@@ -6,7 +6,6 @@ namespace TicketApp.Models.Entities
     [Table("ticket")]
     public class Ticket
     {
-
         [Key]
         [Column("idticket")]
         public int id { get; set; }
@@ -63,7 +62,7 @@ namespace TicketApp.Models.Entities
         public int idTicketType { get; set; }
 
         [ForeignKey("idtickettype")]
-        public Status ticketType { get; set; }
+        public TicketType ticketType { get; set; }
 
 
         [Required]
@@ -71,7 +70,7 @@ namespace TicketApp.Models.Entities
         public int idApp { get; set; }
 
         [ForeignKey("idapp")]
-        public Status app { get; set; }
+        public App app { get; set; }
 
 
 
