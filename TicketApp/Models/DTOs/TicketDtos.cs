@@ -89,11 +89,11 @@ namespace TicketApp.Models.DTOs
 
         // Le Statut du Ticket
         [Required(ErrorMessage = "Le status du Ticket est obligeatoire")]
-        public Status statusTicket { get; set; }
+        public int idStatusTicket { get; set; }
 
         // Le Type du ticket
         [Required(ErrorMessage = "Le type du Ticket est obligeatoire")]
-        public TicketType typeTicket { get; set; }
+        public int idTypeTicket { get; set; }
 
     }
 
@@ -131,15 +131,15 @@ namespace TicketApp.Models.DTOs
 
         // Le Statut du Ticket
         [Required(ErrorMessage = "Le status du Ticket est obligeatoire")]
-        public Status statusTicket { get; set; }
+        public int statusTicket { get; set; }
 
         // Le Type du ticket
         [Required(ErrorMessage = "Le type du Ticket est obligeatoire")]
-        public TicketType typeTicket { get; set; }
+        public int typeTicket { get; set; }
 
         // L'application que le Ticket concerne
         [Required(ErrorMessage = "L'application du Ticket est obligeatoire")]
-        public App appTicket { get; set; }
+        public int appTicket { get; set; }
 
     }
 }

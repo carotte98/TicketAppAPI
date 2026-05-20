@@ -49,9 +49,9 @@ namespace TicketApp.Services
                 authorMsg = ticketDto.authorMsgTicket,
                 startDate = ticketDto.startdateTicket,
                 updateDate = ticketDto.updateDateTicket,
-                status = ticketDto.statusTicket,
-                ticketType = ticketDto.typeTicket,
-                app = ticketDto.appTicket,
+                idStatus = ticketDto.statusTicket,
+                idTicketType = ticketDto.typeTicket,
+                idApp = ticketDto.appTicket,
             };
 
             _context.Tickets.Add(ticket);
@@ -77,8 +77,8 @@ namespace TicketApp.Services
             ticket.devName = ticketdto.devTicket;
             ticket.devMsg = ticketdto.devMsgTicket;
             ticket.updateDate = ticketdto.updateDateTicket;
-            ticket.status = ticketdto.statusTicket;
-            ticket.ticketType = ticketdto.typeTicket;
+            ticket.status.id = ticketdto.idStatusTicket;
+            ticket.ticketType.id = ticketdto.idTypeTicket;
 
             await _context.SaveChangesAsync();
 
@@ -133,8 +133,8 @@ namespace TicketApp.Services
                 devTicket = ticket.devName,
                 devMsgTicket = ticket.devMsg,
                 updateDateTicket = ticket.updateDate,
-                statusTicket = ticket.status,
-                typeTicket = ticket.ticketType,
+                idStatusTicket = ticket.idStatus,
+                idTypeTicket = ticket.idTicketType,
             };
         }
 
@@ -147,9 +147,9 @@ namespace TicketApp.Services
                 authorMsgTicket = ticket.authorMsg,
                 startdateTicket = ticket.startDate,
                 updateDateTicket = ticket.updateDate,
-                statusTicket = ticket.status,
-                typeTicket = ticket.ticketType,
-                appTicket = ticket.app,
+                statusTicket = ticket.idStatus,
+                typeTicket = ticket.idTicketType,
+                appTicket = ticket.idApp,
             };
         }
     }
