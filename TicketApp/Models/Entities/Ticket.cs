@@ -31,12 +31,12 @@ namespace TicketApp.Models.Entities
 
         [MaxLength(40)]
         [Column("devticket")]
-        public string devName { get; set; }
+        public string? devName { get; set; }
 
 
         [MaxLength(255)]
         [Column("devmsgticket")]
-        public string devMsg { get; set; }
+        public string? devMsg { get; set; }
 
 
         [Required]

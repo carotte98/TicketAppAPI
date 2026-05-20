@@ -65,7 +65,11 @@ namespace TicketApp.Services
 
         public async Task<GetTicketDto?> UpdateAsync(int id, UpdateTicketDto ticketdto)
         {
-            var ticket = await _context.Tickets.FindAsync(id);
+            var ticket = await _context.Tickets
+                .Include(p => p.status)
+                .Include(p => p.ticketType)
+                .Include(p => p.app)
+                .FirstOrDefaultAsync(p => p.id == id);
 
             if (ticket == null)
             {
@@ -77,8 +81,8 @@ namespace TicketApp.Services
             ticket.devName = ticketdto.devTicket;
             ticket.devMsg = ticketdto.devMsgTicket;
             ticket.updateDate = ticketdto.updateDateTicket;
-            ticket.status.id = ticketdto.idStatusTicket;
-            ticket.ticketType.id = ticketdto.idTypeTicket;
+            ticket.idStatus = ticketdto.idStatusTicket;
+            ticket.idTicketType = ticketdto.idTypeTicket;
 
             await _context.SaveChangesAsync();
 
