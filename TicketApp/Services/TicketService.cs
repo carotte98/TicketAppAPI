@@ -40,6 +40,34 @@ namespace TicketApp.Services
             return ticket == null ? null : MapToGetDto(ticket);
         }
 
+        //GET BY DEV NAME
+        public async Task<IEnumerable<GetTicketDto>> GetByDevNameAsync(string name)
+        {
+            return await _context.Tickets
+                .AsNoTracking()
+                .Where(p => p.devName == name)
+                .Include(p => p.status)
+                .Include(p => p.ticketType)
+                .Include(p => p.app)
+                .Select(p => MapToGetDto(p))
+                .ToListAsync();
+
+        }
+
+        //GET BY User NAME
+        public async Task<IEnumerable<GetTicketDto>> GetByAuthorNameAsync(string name)
+        {
+            return await _context.Tickets
+                .AsNoTracking()
+                .Where(p => p.authorName == name)
+                .Include(p => p.status)
+                .Include(p => p.ticketType)
+                .Include(p => p.app)
+                .Select(p => MapToGetDto(p))
+                .ToListAsync();
+
+        }
+
         public async Task<GetTicketDto> CreateAsync(CreateTicketDto ticketDto)
         {
             var ticket = new Ticket

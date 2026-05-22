@@ -10,6 +10,16 @@ namespace TicketApp.Services.Interfaces
         Task<IEnumerable<GetTicketDto>> GetAllAsync();
 
         /// <summary>
+        /// Récupère toutes les entrées Tickets.
+        /// </summary>
+        Task<IEnumerable<GetTicketDto>> GetByDevNameAsync(string name);
+
+        /// <summary>
+        /// Récupère toutes les entrées Tickets.
+        /// </summary>
+        Task<IEnumerable<GetTicketDto>> GetByAuthorNameAsync(string name);
+
+        /// <summary>
         /// Récupère une Ticket par son identifiant.
         /// </summary>
         Task<GetTicketDto?> GetByIdAsync(int id);

@@ -27,6 +27,28 @@ namespace TicketApp.Controllers
             return Ok(result);
         }
 
+        // BY DEV NAME
+        [HttpGet("/dev/{name}")]
+        public async Task<IActionResult> GetByDevName(string name)
+        {
+            _logger.LogInformation("Récupération des tickets du Dev");
+
+            var result = await _ticketService.GetByDevNameAsync(name);
+
+            return Ok(result);
+        }
+
+        // BY Author NAME
+        [HttpGet("/author/{name}")]
+        public async Task<IActionResult> GetByAuthorName(string name)
+        {
+            _logger.LogInformation("Récupération des tickets de l'auteur");
+
+            var result = await _ticketService.GetByAuthorNameAsync(name);
+
+            return Ok(result);
+        }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
