@@ -1,0 +1,79 @@
+-- Execute this first command first and then select this DB as default before executing the Tables commands --
+
+CREATE DATABASE TicketApp;
+
+-------------------------------------
+
+CREATE TABLE public.app (
+	idapp serial4 NOT NULL,
+	nameapp varchar(50) NOT NULL,
+	CONSTRAINT app_nameapp_key UNIQUE (nameapp),
+	CONSTRAINT app_pkey PRIMARY KEY (idapp)
+);
+
+
+CREATE TABLE public.status (
+	idstatus serial4 NOT NULL,
+	namestatus bpchar(20) NOT NULL,
+	CONSTRAINT status_namestatus_key UNIQUE (namestatus),
+	CONSTRAINT status_pkey PRIMARY KEY (idstatus)
+);
+
+
+CREATE TABLE public.tickettype (
+	idtickettype serial4 NOT NULL,
+	nametickettype bpchar(20) NOT NULL,
+	CONSTRAINT tickettype_nametickettype_key UNIQUE (nametickettype),
+	CONSTRAINT tickettype_pkey PRIMARY KEY (idtickettype)
+);
+
+
+CREATE TABLE public.ticket (
+	idticket serial4 NOT NULL,
+	nameticket bpchar(60) NOT NULL,
+	authorticket bpchar(40) NOT NULL,
+	authormsgticket bpchar(255) NOT NULL,
+	devticket varchar(40) NULL,
+	devmsgticket varchar(255) NULL,
+	startdateticket timestamp NOT NULL,
+	updatedateticket timestamp NOT NULL,
+	idstatus int4 NOT NULL,
+	idtickettype int4 NOT NULL,
+	idapp int4 NOT NULL,
+	CONSTRAINT ticket_pkey PRIMARY KEY (idticket),
+	CONSTRAINT ticket_idapp_fkey FOREIGN KEY (idapp) REFERENCES public.app(idapp),
+	CONSTRAINT ticket_idstatus_fkey FOREIGN KEY (idstatus) REFERENCES public.status(idstatus),
+	CONSTRAINT ticket_idtickettype_fkey FOREIGN KEY (idtickettype) REFERENCES public.tickettype(idtickettype)
+);
+
+INSERT INTO public.tickettype
+(idtickettype, nametickettype)
+VALUES(1, 'BUG                 ');
+INSERT INTO public.tickettype
+(idtickettype, nametickettype)
+VALUES(2, 'EVOLUTION           ');
+INSERT INTO public.tickettype
+(idtickettype, nametickettype)
+VALUES(3, 'QUESTION            ');
+
+
+
+INSERT INTO public.status
+(idstatus, namestatus)
+VALUES(1, 'EN ATTENTE          ');
+INSERT INTO public.status
+(idstatus, namestatus)
+VALUES(2, 'PRIS EN CHARGE      ');
+INSERT INTO public.status
+(idstatus, namestatus)
+VALUES(3, 'TERMINE             ');
+
+
+
+INSERT INTO public.app
+(idapp, nameapp)
+VALUES(2, 'Cisco');
+INSERT INTO public.app
+(idapp, nameapp)
+VALUES(1, 'Jugpi');
+
