@@ -22,6 +22,10 @@ namespace TicketApp.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Renvoie toutes les Apps
+        /// </summary>
+        /// <returns>OK avec Enumerable des Apps</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,7 +36,11 @@ namespace TicketApp.Controllers
             return Ok(result);
         }
 
-
+        /// <summary>
+        /// Renvoie l'app à un id donné
+        /// </summary>
+        /// <param name="id">l'id de l'app</param>
+        /// <returns>NotFound si inexistant, OK avec l'objet si existant</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -46,6 +54,11 @@ namespace TicketApp.Controllers
             return Ok(app);
         }
 
+        /// <summary>
+        /// Crée une nouvelle app
+        /// </summary>
+        /// <param name="dto">La DTO avec l'app</param>
+        /// <returns>CreatedAtAction avec l'objet</returns>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]AppDto dto)
         {
@@ -57,6 +70,12 @@ namespace TicketApp.Controllers
             return CreatedAtAction(nameof(GetById), new { id = app.idApp }, app);
         }
 
+        /// <summary>
+        /// Mets à jour l'app
+        /// </summary>
+        /// <param name="id">l'id de l'app</param>
+        /// <param name="dto">La DTO avec les changements</param>
+        /// <returns>NotFound si l'app n'existe pas, OK si mis à jour</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] AppDto dto) 
         {
@@ -68,6 +87,11 @@ namespace TicketApp.Controllers
             return Ok(app);
         }
 
+        /// <summary>
+        /// Supprime une app
+        /// </summary>
+        /// <param name="id">l'id de l'app</param>
+        /// <returns>NoContent si supprimé, sinon NotFound</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

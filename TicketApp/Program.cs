@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc();
 
+// Initialisation de Swagger
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "TicketApp", Version = "v1" });
@@ -59,6 +60,7 @@ var app = builder.Build();
 
 app.UseSwagger();
 
+// Activation de Swagger UI
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("v1/swagger.json", "TicketAppV1");

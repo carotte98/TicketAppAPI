@@ -17,6 +17,10 @@ namespace TicketApp.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Renvoie toutes les Apps
+        /// </summary>
+        /// <returns>Enumerable des Apps</returns>
         public async Task<IEnumerable<AppDto>> GetAllAsync()
         {
             return await _context.Apps
@@ -25,6 +29,11 @@ namespace TicketApp.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Renvoie l'App à l'id demandé
+        /// </summary>
+        /// <param name="id">L'id de l'app</param>
+        /// <returns>L'app à l'id</returns>
         public async Task<AppDto?> GetByIdAsync(int id)
         {
             var app = await _context.Apps
@@ -34,7 +43,11 @@ namespace TicketApp.Services
             return app == null ? null : MapToDto(app);
         }
 
-
+        /// <summary>
+        /// Crée une nouvelle app
+        /// </summary>
+        /// <param name="appDto">La DTO avec la nouvelle app</param>
+        /// <returns>Une DTO de l'app nouvellement créée</returns>
         public async Task<AppDto> CreateAsync(AppDto appDto)
         {
             var app = new App
@@ -50,7 +63,12 @@ namespace TicketApp.Services
             return MapToDto(app);
         }
 
-
+        /// <summary>
+        /// Mets à jour l'app à l'id indiqué
+        /// </summary>
+        /// <param name="id">L'id de l'app</param>
+        /// <param name="appdto">La DTO avec les changements</param>
+        /// <returns>Une DTO de l'app à jour</returns>
         public async Task<AppDto?> UpdateAsync(int id, AppDto appdto)
         {
             var app = await _context.Apps.FindAsync(id);
@@ -70,6 +88,11 @@ namespace TicketApp.Services
             return MapToDto(app);
         }
 
+        /// <summary>
+        /// Supprime l'app à l'id indiqué
+        /// </summary>
+        /// <param name="id">L'id de l'app</param>
+        /// <returns>Vrai si supprimé, faux dans le cas contraire</returns>
         public async Task<bool> DeleteAsync(int id)
         {
             var app = await _context.Apps.FindAsync(id);
@@ -87,12 +110,21 @@ namespace TicketApp.Services
             return true;
         }
 
+        /// <summary>
+        /// Contrôle si l'app existe à ce nom
+        /// </summary>
+        /// <param name="name">Le nom de l'app</param>
+        /// <returns>Vrai si déjà existant, faux sinon</returns>
         public async Task<bool> ExistsByName(string name)
         {
             return await _context.Apps.AnyAsync(p => p.name.ToLower() == name.ToLower());
         }
 
-
+        /// <summary>
+        /// Lie un Objet App à sa DTO
+        /// </summary>
+        /// <param name="app">L'app à lier</param>
+        /// <returns>La Dto de l'app</returns>
         private static AppDto MapToDto(App app)
         {
             return new AppDto

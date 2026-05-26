@@ -17,6 +17,10 @@ namespace TicketApp.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Renvoie tous les Tickets
+        /// </summary>
+        /// <returns>OK avec Enumerable de Tickets</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -27,7 +31,11 @@ namespace TicketApp.Controllers
             return Ok(result);
         }
 
-        // BY DEV NAME
+        /// <summary>
+        /// Renvoie tous les tickets d'un dev
+        /// </summary>
+        /// <param name="name">Nom du Dev</param>
+        /// <returns>Ok avec Enumerable de Tickets</returns>
         [HttpGet("/dev/{name}")]
         public async Task<IActionResult> GetByDevName(string name)
         {
@@ -38,7 +46,11 @@ namespace TicketApp.Controllers
             return Ok(result);
         }
 
-        // BY Author NAME
+        /// <summary>
+        /// Renvoie tous les tickets d'un auteur
+        /// </summary>
+        /// <param name="name">Nom de l'auteur</param>
+        /// <returns>OK avec Enumerable des Tickets</returns>
         [HttpGet("/author/{name}")]
         public async Task<IActionResult> GetByAuthorName(string name)
         {
@@ -49,7 +61,11 @@ namespace TicketApp.Controllers
             return Ok(result);
         }
 
-
+        /// <summary>
+        /// Renvoie un ticket donné
+        /// </summary>
+        /// <param name="id">Id du Ticket</param>
+        /// <returns>NotFound si inexistant, OK avec le Ticket sinon</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -63,6 +79,11 @@ namespace TicketApp.Controllers
             return Ok(ticket);
         }
 
+        /// <summary>
+        /// Crée un nouveau Ticket
+        /// </summary>
+        /// <param name="dto">DTO du Ticket</param>
+        /// <returns>CreatedAtAction avec le ticket créé</returns>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateTicketDto dto)
         {
@@ -71,6 +92,12 @@ namespace TicketApp.Controllers
             return CreatedAtAction(nameof(GetById), new { id = ticket.idTicket }, ticket);
         }
 
+        /// <summary>
+        /// Mets à jour un Ticket
+        /// </summary>
+        /// <param name="id">Id du Ticket</param>
+        /// <param name="dto">DTO avec les changements</param>
+        /// <returns>NotFound si inexistant, sinon OK avec Objet à jour</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateTicketDto dto)
         {
@@ -82,6 +109,11 @@ namespace TicketApp.Controllers
             return Ok(ticket);
         }
 
+        /// <summary>
+        /// Supprime un ticket
+        /// </summary>
+        /// <param name="id">ID du Ticket</param>
+        /// <returns>NotFound si inexistant, sinon NoContent si supprimé</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

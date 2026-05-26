@@ -18,6 +18,10 @@ namespace TicketApp.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Renvoie tous les types
+        /// </summary>
+        /// <returns>OK avec Enumerable des Types</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -28,7 +32,11 @@ namespace TicketApp.Controllers
             return Ok(result);
         }
 
-
+        /// <summary>
+        /// Renvoie un Type donné
+        /// </summary>
+        /// <param name="id">Id du Type</param>
+        /// <returns>NotFound si inexistant, sinon OK avec le Type</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -42,6 +50,11 @@ namespace TicketApp.Controllers
             return Ok(ticketType);
         }
 
+        /// <summary>
+        /// Crée un Type
+        /// </summary>
+        /// <param name="dto">DTO avec le type</param>
+        /// <returns>Conflicts en cas de doublon, CreatedAtAction avec l'objet sinon</returns>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TicketTypeDto dto)
         {
@@ -53,6 +66,12 @@ namespace TicketApp.Controllers
             return CreatedAtAction(nameof(GetById), new { id = ticketType.idTicketType }, ticketType);
         }
 
+        /// <summary>
+        /// Mets à jour un Type
+        /// </summary>
+        /// <param name="id">Id du Type</param>
+        /// <param name="dto">DTO avec les changements</param>
+        /// <returns>NotFound si inexistant, OK avec objet mis à jour autrement</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] TicketTypeDto dto)
         {
@@ -64,6 +83,11 @@ namespace TicketApp.Controllers
             return Ok(ticketType);
         }
 
+        /// <summary>
+        /// Supprime un Type
+        /// </summary>
+        /// <param name="id">Id du Type</param>
+        /// <returns>NotFound is inexistant, NoContent si supprimé</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

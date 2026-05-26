@@ -18,6 +18,10 @@ namespace TicketApp.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// renvoie tous les statuts
+        /// </summary>
+        /// <returns>Enumerable de tous les status</returns>
         public async Task<IEnumerable<StatusDto>> GetAllAsync()
         {
             return await _context.Statuses
@@ -26,6 +30,11 @@ namespace TicketApp.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Renvoie le Ticket à un id donné
+        /// </summary>
+        /// <param name="id">L'id du Statut</param>
+        /// <returns>Null si le Statut est inexistant, sinon le Statut</returns>
         public async Task<StatusDto?> GetByIdAsync(int id)
         {
             var status = await _context.Statuses
@@ -35,7 +44,11 @@ namespace TicketApp.Services
             return status == null ? null : MapToDto(status);
         }
 
-
+        /// <summary>
+        /// Crée un nouveau statut
+        /// </summary>
+        /// <param name="statusDto">La DTO du statut à créer</param>
+        /// <returns>Un DTO du statut une fois créé</returns>
         public async Task<StatusDto> CreateAsync(StatusDto statusDto)
         {
             var status = new Status
@@ -51,7 +64,12 @@ namespace TicketApp.Services
             return MapToDto(status);
         }
 
-
+        /// <summary>
+        /// Mets à jour le ticket à l'id donné
+        /// </summary>
+        /// <param name="id">L'id du Ticket</param>
+        /// <param name="statusdto">Le DTO avec les changements</param>
+        /// <returns>Le Dto avec le statut changé</returns>
         public async Task<StatusDto?> UpdateAsync(int id, StatusDto statusdto)
         {
             var status = await _context.Statuses.FindAsync(id);
@@ -71,6 +89,11 @@ namespace TicketApp.Services
             return MapToDto(status);
         }
 
+        /// <summary>
+        /// Supprime le statut à l'id donné
+        /// </summary>
+        /// <param name="id">L'id du statut</param>
+        /// <returns>Vrai si supprimé avec succès, sinon Faux</returns>
         public async Task<bool> DeleteAsync(int id)
         {
             var status = await _context.Statuses.FindAsync(id);
@@ -88,12 +111,21 @@ namespace TicketApp.Services
             return true;
         }
 
+        /// <summary>
+        /// Contrôle si le Statut existe sous ce nom
+        /// </summary>
+        /// <param name="name">Le nom du statut</param>
+        /// <returns>Renvoie faux si inexistant, vrai si déjà existant</returns>
         public async Task<bool> ExistsByName(string name)
         {
             return await _context.Statuses.AnyAsync(p => p.name.ToLower() == name.ToLower());
         }
 
-
+        /// <summary>
+        /// Lie Un statut à sa DTO
+        /// </summary>
+        /// <param name="status">L'objet statut à lier</param>
+        /// <returns>Un statutDto du Statut</returns>
         private static StatusDto MapToDto(Status status)
         {
             return new StatusDto

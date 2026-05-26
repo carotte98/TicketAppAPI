@@ -17,6 +17,10 @@ namespace TicketApp.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Renvoie TOUS les Types de Ticket
+        /// </summary>
+        /// <returns>Enumerable des Types de Tickets</returns>
         public async Task<IEnumerable<TicketTypeDto>> GetAllAsync()
         {
             return await _context.TicketTypes
@@ -25,6 +29,11 @@ namespace TicketApp.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Renvoie le Type de Ticket avec l'id donné
+        /// </summary>
+        /// <param name="id">L'id du type</param>
+        /// <returns>Le type à l'id</returns>
         public async Task<TicketTypeDto?> GetByIdAsync(int id)
         {
             var ticketType = await _context.TicketTypes
@@ -34,7 +43,11 @@ namespace TicketApp.Services
             return ticketType == null ? null : MapToDto(ticketType);
         }
 
-
+        /// <summary>
+        /// Crée un nouveau type de Ticket
+        /// </summary>
+        /// <param name="ticketTypeDto">La DTO avec le type de ticket</param>
+        /// <returns>Le type de ticket une fois créé</returns>
         public async Task<TicketTypeDto> CreateAsync(TicketTypeDto ticketTypeDto)
         {
             var ticketType = new TicketType
@@ -50,7 +63,12 @@ namespace TicketApp.Services
             return MapToDto(ticketType);
         }
 
-
+        /// <summary>
+        /// Mets à jour le type de ticket à l'id donnée
+        /// </summary>
+        /// <param name="id">l'id du type de ticket</param>
+        /// <param name="ticketTypedto">La DTO avec les changements</param>
+        /// <returns>Le type une fois mis à jour</returns>
         public async Task<TicketTypeDto?> UpdateAsync(int id, TicketTypeDto ticketTypedto)
         {
             var ticketType = await _context.TicketTypes.FindAsync(id);
@@ -70,6 +88,11 @@ namespace TicketApp.Services
             return MapToDto(ticketType);
         }
 
+        /// <summary>
+        /// Supprime le type de ticket à l'id donné
+        /// </summary>
+        /// <param name="id">l'id du type de ticket</param>
+        /// <returns>Vrai si supprimé, faux dans le cas contraire</returns>
         public async Task<bool> DeleteAsync(int id)
         {
             var ticketType = await _context.TicketTypes.FindAsync(id);
@@ -87,12 +110,21 @@ namespace TicketApp.Services
             return true;
         }
 
+        /// <summary>
+        /// Contrôle si le type existe déjà
+        /// </summary>
+        /// <param name="name">Le nom du type</param>
+        /// <returns>Vrai si existant, sinon faux</returns>
         public async Task<bool> ExistsByName(string name)
         {
             return await _context.TicketTypes.AnyAsync(p => p.name.ToLower() == name.ToLower());
         }
 
-
+        /// <summary>
+        /// Lie l'objet Type à sa DTO
+        /// </summary>
+        /// <param name="app">Le type</param>
+        /// <returns>La DTO</returns>
         private static TicketTypeDto MapToDto(TicketType app)
         {
             return new TicketTypeDto
