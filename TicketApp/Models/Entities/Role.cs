@@ -3,16 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TicketApp.Models.Entities
 {
-    [Table("status")]
-    public class Status
+    [Table("role")]
+    public class Role
     {
         [Key]
-        [Column("idstatus")]
+        [Column("idrole")]
         public int id { get; set; }
 
         [Required]
         [MaxLength(20)]
-        [Column("namestatus")]
+        [Column("namerole")]
         public string name { get; set; }
+
+
     }
 }
