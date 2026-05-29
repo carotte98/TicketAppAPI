@@ -15,5 +15,7 @@ namespace TicketApp.Data
         public DbSet<TicketType> TicketTypes { get; set; }
 
         public DbSet<Ticket> Tickets { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
     }
 }
